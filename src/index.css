@@ -10,3 +10,23 @@ html, body, #root {
   height: 100%;
   margin: 0;
 }
+
+/* Output panel — Shiki line numbers via CSS counters */
+.shiki code {
+  counter-reset: line;
+}
+
+.shiki code .line {
+  counter-increment: line;
+}
+
+.shiki code .line::before {
+  content: counter(line);
+  display: inline-block;
+  width: 2ch;
+  margin-right: 1.25rem;
+  text-align: right;
+  color: #52525b; /* zinc-600 */
+  user-select: none;
+  pointer-events: none;
+}

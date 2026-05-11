@@ -92,19 +92,17 @@ function toYaml(value: unknown, indent: number): string {
     return value.map((item) => `${pad}- ${toYaml(item, indent + 1).trimStart()}`).join('\n')
   }
 
-  if (typeof value === 'object') {
-    const entries = Object.entries(value as Record<string, unknown>)
-    if (entries.length === 0) return '{}'
-    return entries
-      .map(([k, v]) => {
-        if (typeof v === 'object' && v !== null && !Array.isArray(v)) {
-          return `${pad}${k}:\n${toYaml(v, indent + 1)}`
-        }
-        if (Array.isArray(v)) {
-          return `${pad}${k}:\n${toYaml(v, indent + 1)}`
-        }
-        return `${pad}${k}: ${toYaml(v, indent)}`
-      })
-      .join('\n')
-  }
+  const entries = Object.entries(value as Record<string, unknown>)
+  if (entries.length === 0) return '{}'
+  return entries
+    .map(([k, v]) => {
+      if (typeof v === 'object' && v !== null && !Array.isArray(v)) {
+        return `${pad}${k}:\n${toYaml(v, indent + 1)}`
+      }
+      if (Array.isArray(v)) {
+        return `${pad}${k}:\n${toYaml(v, indent + 1)}`
+      }
+      return `${pad}${k}: ${toYaml(v, indent)}`
+    })
+    .join('\n')
 }

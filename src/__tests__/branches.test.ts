@@ -198,7 +198,7 @@ describe('OpenAPI — empty array field (line 51)', () => {
 describe('Zod — unknown fallthrough', () => {
   it('emits z.unknown() for unknown-kind field node', () => {
     // [{x: null}] → field x has {kind:'unknown'} → resolveSchema returns 'z.unknown()'
-    const out = generateZod(inferNode([{ x: null }]))
+    const out = zod([{ x: null }])
     expect(out).toContain('z.unknown()')
   })
 })

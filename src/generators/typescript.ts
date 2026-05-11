@@ -1,4 +1,4 @@
-import type { JsonNode, Field } from '../core/types'
+import type { JsonNode } from '../core/types'
 import { toPascalCase, sanitizeKey } from '../core/naming'
 
 export function generateTypeScript(root: JsonNode, rootName = 'Root'): string {

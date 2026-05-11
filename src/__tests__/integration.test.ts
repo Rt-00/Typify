@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { parse } from '../core/parse'
+import type { JsonNode } from '../core/types'
 import { generateTypeScript } from '../generators/typescript'
 import { generateRust } from '../generators/rust'
 import { generateGo } from '../generators/go'
@@ -9,7 +10,7 @@ import { generateOpenAPI } from '../generators/openapi'
 import simpleFixture from '../__fixtures__/simple.json'
 import usersFixture from '../__fixtures__/users.json'
 
-function pipeline(json: unknown, gen: (node: ReturnType<typeof parse>['node' & 'ok']) => string): string {
+function pipeline(json: unknown, gen: (node: JsonNode) => string): string {
   const result = parse(JSON.stringify(json))
   if (!result.ok) throw new Error(result.error)
   return gen(result.node)
