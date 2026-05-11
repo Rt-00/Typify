@@ -14,7 +14,7 @@ function resolveType(node: JsonNode, name: string, out: string[]): string {
     for (const field of node.fields) {
       const goField = toPascalCase(field.key)
       const innerType = resolveType(field.node, `${typeName}${toPascalCase(field.key)}`, out)
-      const goType = field.optional ? `*${innerType}` : innerType
+      const goType = field.optional && innerType !== 'interface{}' ? `*${innerType}` : innerType
       const omit = field.optional ? ',omitempty' : ''
       const safeKey = sanitizeKey(field.key)
       lines.push(`\t${goField} ${goType} \`json:"${safeKey}${omit}"\``)

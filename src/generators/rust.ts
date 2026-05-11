@@ -50,7 +50,7 @@ function resolveType(node: JsonNode, name: string, out: string[]): string {
       case 'integer': return 'i64'
       case 'float': return 'f64'
       case 'boolean': return 'bool'
-      case 'null': return 'Option<serde_json::Value>'
+      case 'null': return 'serde_json::Value'
     }
   }
 

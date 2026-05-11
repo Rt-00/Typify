@@ -21,9 +21,16 @@ describe('Go generator', () => {
     expect(out).toContain('omitempty')
   })
 
-  it('uses pointer type for nullable fields', () => {
+  it('uses pointer type for optional typed fields from merged arrays', () => {
+    // role is absent in second item → optional string → *string in Go
+    const out = generateGo(inferNode([{ id: 1, role: 'admin' }, { id: 2 }]))
+    expect(out).toContain('*string')
+  })
+
+  it('uses interface{} without pointer for null-valued fields', () => {
     const out = gen({ id: 1, nickname: null })
-    expect(out).toMatch(/\*/)
+    expect(out).toContain('interface{}')
+    expect(out).not.toContain('*interface{}')
   })
 
   it('generates slice type for arrays', () => {
