@@ -3,34 +3,34 @@ import { toPascalCase, toCamelCase, sanitizeKey } from '../core/naming'
 
 export function generateJava(root: JsonNode, rootName = 'Root'): string {
   const classes: string[] = []
-  resolveType(root, rootName, classes)
+  resolveType(root, rootName, classes, '')
   return classes.join('\n\n')
 }
 
-function resolveType(node: JsonNode, name: string, out: string[], isInner = false): string {
+function resolveType(node: JsonNode, name: string, out: string[], indent: string): string {
   if (node.kind === 'object') {
     const typeName = toPascalCase(name)
-    const indent = isInner ? '    ' : ''
+    const fieldIndent = indent + '    '
+    const classKw = indent === '' ? 'public class' : 'public static class'
     const lines: string[] = []
 
     lines.push(`${indent}@Data`)
     lines.push(`${indent}@Builder`)
     lines.push(`${indent}@NoArgsConstructor`)
     lines.push(`${indent}@AllArgsConstructor`)
-    const modifier = isInner ? `${indent}public static class` : `public class`
-    lines.push(`${modifier} ${typeName} {`)
+    lines.push(`${indent}${classKw} ${typeName} {`)
 
     const innerClasses: string[] = []
     for (const field of node.fields) {
       const javaField = toCamelCase(field.key)
-      const innerType = resolveInnerType(field.node, `${typeName}${toPascalCase(field.key)}`, innerClasses)
+      const innerType = resolveInnerType(field.node, `${typeName}${toPascalCase(field.key)}`, innerClasses, fieldIndent)
       const javaType = field.optional ? toNullableType(innerType) : innerType
       const safeKey = sanitizeKey(field.key)
-      lines.push(`${indent}    @JsonProperty("${safeKey}")`)
-      lines.push(`${indent}    private ${javaType} ${javaField};`)
+      lines.push(`${fieldIndent}@JsonProperty("${safeKey}")`)
+      lines.push(`${fieldIndent}private ${javaType} ${javaField};`)
       lines.push('')
     }
-    if (node.fields.length === 0) lines.push(`${indent}    // empty class`)
+    if (node.fields.length === 0) lines.push(`${fieldIndent}// empty class`)
 
     for (const inner of innerClasses) {
       lines.push('')
@@ -42,24 +42,24 @@ function resolveType(node: JsonNode, name: string, out: string[], isInner = fals
     return typeName
   }
 
-  return resolveInnerType(node, name, out)
+  return resolveInnerType(node, name, out, indent)
 }
 
-function resolveInnerType(node: JsonNode, name: string, out: string[]): string {
+function resolveInnerType(node: JsonNode, name: string, out: string[], indent: string): string {
   if (node.kind === 'object') {
-    return resolveType(node, name, out, true)
+    return resolveType(node, name, out, indent)
   }
 
   if (node.kind === 'array') {
     if (node.items.kind === 'unknown') return 'List<Object>'
-    const inner = resolveInnerType(node.items, name, out)
+    const inner = resolveInnerType(node.items, name, out, indent)
     return `List<${toBoxedType(inner)}>`
   }
 
   if (node.kind === 'union') {
     if (node.types.length === 2 && node.types.some((t) => t.kind === 'primitive' && t.type === 'null')) {
       const nonNull = node.types.find((t) => !(t.kind === 'primitive' && t.type === 'null'))!
-      return toBoxedType(resolveInnerType(nonNull, name, out))
+      return toBoxedType(resolveInnerType(nonNull, name, out, indent))
     }
     return 'Object'
   }
