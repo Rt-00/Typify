@@ -67,7 +67,6 @@ function mergeObjectFields(objects: { [k: string]: JsonValue }[]): JsonNode {
 }
 
 function unifyNodes(nodes: JsonNode[]): JsonNode {
-  if (nodes.length === 0) return { kind: 'unknown' }
   if (nodes.length === 1) return nodes[0]!
 
   const unique = deduplicateNodes(nodes)

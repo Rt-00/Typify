@@ -43,7 +43,6 @@ function resolveSchema(node: JsonNode, typeName: string, schemaName: string, out
 
   if (node.kind === 'union') {
     const parts = node.types.map((t) => resolveSchema(t, typeName, schemaName, out))
-    if (parts.length === 2) return `z.union([${parts.join(', ')}])`
     return `z.union([${parts.join(', ')}])`
   }
 

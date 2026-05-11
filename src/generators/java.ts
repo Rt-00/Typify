@@ -78,21 +78,9 @@ function resolveInnerType(node: JsonNode, name: string, out: string[], indent: s
 }
 
 function toBoxedType(t: string): string {
-  switch (t) {
-    case 'int': return 'Integer'
-    case 'long': return 'Long'
-    case 'double': return 'Double'
-    case 'boolean': return 'Boolean'
-    default: return t
-  }
+  return t
 }
 
 function toNullableType(t: string): string {
-  switch (t) {
-    case 'int': return 'Integer'
-    case 'long': return 'Long'
-    case 'double': return 'Double'
-    case 'boolean': return 'Boolean'
-    default: return t
-  }
+  return t
 }

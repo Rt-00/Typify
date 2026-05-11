@@ -30,6 +30,7 @@ describe('sanitizeKey', () => {
   it('replaces spaces', () => expect(sanitizeKey('my field')).toBe('my_field'))
   it('prefixes leading digit', () => expect(sanitizeKey('123abc')).toBe('_123abc'))
   it('replaces special chars', () => expect(sanitizeKey('field@name')).toBe('field_name'))
+  it('returns _ for empty string', () => expect(sanitizeKey('')).toBe('_'))
 })
 
 describe('needsRename', () => {

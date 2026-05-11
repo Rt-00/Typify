@@ -80,9 +80,7 @@ function resolveInlineSchema(node: JsonNode, name: string, out: Record<string, u
 function toYaml(value: unknown, indent: number): string {
   const pad = '  '.repeat(indent)
 
-  if (value === null || value === undefined) return 'null'
   if (typeof value === 'boolean') return String(value)
-  if (typeof value === 'number') return String(value)
   if (typeof value === 'string') {
     if (/[:#\[\]{},&*?|<>=!%@`]/.test(value) || value.includes('\n')) {
       return `"${value.replace(/"/g, '\\"')}"`
@@ -91,7 +89,6 @@ function toYaml(value: unknown, indent: number): string {
   }
 
   if (Array.isArray(value)) {
-    if (value.length === 0) return '[]'
     return value.map((item) => `${pad}- ${toYaml(item, indent + 1).trimStart()}`).join('\n')
   }
 
@@ -104,13 +101,10 @@ function toYaml(value: unknown, indent: number): string {
           return `${pad}${k}:\n${toYaml(v, indent + 1)}`
         }
         if (Array.isArray(v)) {
-          if (v.length === 0) return `${pad}${k}: []`
           return `${pad}${k}:\n${toYaml(v, indent + 1)}`
         }
         return `${pad}${k}: ${toYaml(v, indent)}`
       })
       .join('\n')
   }
-
-  return String(value)
 }
