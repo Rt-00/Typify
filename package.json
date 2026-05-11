@@ -1,0 +1,45 @@
+{
+  "name": "typify",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepare": "simple-git-hooks"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@monaco-editor/react": "^4.6.0",
+    "shiki": "^1.24.2",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@types/js-yaml": "^4.0.9",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.6.2",
+    "vite": "^6.0.1",
+    "vitest": "^2.1.8",
+    "@vitest/coverage-v8": "^2.1.8",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.15",
+    "simple-git-hooks": "^2.11.1",
+    "nano-staged": "^0.8.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx nano-staged"
+  },
+  "nano-staged": {
+    "*.ts": [
+      "vitest run --coverage"
+    ]
+  }
+}

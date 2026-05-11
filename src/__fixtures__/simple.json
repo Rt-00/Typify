@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "name": "Alice",
+  "active": true,
+  "score": 9.5,
+  "tags": ["admin", "user"],
+  "address": {
+    "city": "Berlin",
+    "zip": "10115"
+  },
+  "nickname": null
+}
