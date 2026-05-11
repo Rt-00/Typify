@@ -19,10 +19,9 @@ export function toSnakeCase(str: string): string {
 }
 
 export function sanitizeKey(key: string): string {
-  // Remove leading digits
   const withoutLeadingDigits = key.replace(/^(\d+)/, '_$1')
-  // Replace invalid identifier characters with underscore
-  return withoutLeadingDigits.replace(/[^a-zA-Z0-9_$]/g, '_')
+  const sanitized = withoutLeadingDigits.replace(/[^a-zA-Z0-9_$]/g, '_')
+  return sanitized || '_'
 }
 
 export function needsRename(key: string): boolean {
