@@ -79,10 +79,10 @@ export function OutputPanel({ code, target }: Props) {
           </div>
         )}
       </div>
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto bg-[#24292e]">
         {html ? (
           <div
-            className="min-h-full [&>pre]:min-h-full [&>pre]:px-4 [&>pre]:py-4 [&>pre]:text-sm [&>pre]:font-mono [&>pre]:leading-relaxed"
+            className="min-h-full min-w-full w-max [&>pre]:min-h-full [&>pre]:min-w-full [&>pre]:px-4 [&>pre]:py-4 [&>pre]:text-sm [&>pre]:font-mono [&>pre]:leading-relaxed"
             dangerouslySetInnerHTML={{ __html: html }}
           />
         ) : (
