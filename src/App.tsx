@@ -102,8 +102,8 @@ export default function App() {
       {/* Main split */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left: JSON Input */}
-        <div className="w-1/2 flex flex-col border-r border-zinc-700">
-          <div className="flex-1 overflow-hidden">
+        <div className="w-1/2 flex flex-col border-r border-zinc-700 min-h-0">
+          <div className="flex-1 min-h-0">
             <JsonInput
               value={input}
               onChange={setInput}
@@ -120,9 +120,9 @@ export default function App() {
         </div>
 
         {/* Right: Output */}
-        <div className="w-1/2 flex flex-col">
+        <div className="w-1/2 flex flex-col min-h-0">
           <TargetTabs active={target} onChange={setTarget} />
-          <div className="flex-1 overflow-hidden border-t border-zinc-600">
+          <div className="flex-1 min-h-0 border-t border-zinc-600">
             <OutputPanel code={output} target={target} />
           </div>
         </div>

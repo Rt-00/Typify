@@ -42,7 +42,7 @@ export function JsonInput({ value, onChange, onFormat, onClear, hasError }: Prop
           </button>
         </div>
       </div>
-      <div className={`flex-1 border-r ${hasError ? 'border-red-800' : 'border-zinc-700'} transition-colors`}>
+      <div className={`flex-1 min-h-0 border-r ${hasError ? 'border-red-800' : 'border-zinc-700'} transition-colors`}>
         <Editor
           height="100%"
           defaultLanguage="json"
