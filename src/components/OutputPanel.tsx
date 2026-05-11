@@ -32,6 +32,9 @@ export function OutputPanel({ code, target }: Props) {
 
   useEffect(() => {
     if (!code) { setHtml(''); return }
+    // Shiki HTML-escapes all token content before wrapping in <span> elements.
+    // The code string itself is generator output (sanitized identifiers only),
+    // never raw user input — so dangerouslySetInnerHTML below is safe.
     codeToHtml(code, {
       lang: LANG_MAP[target],
       theme: 'github-dark',

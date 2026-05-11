@@ -5,6 +5,24 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Typify — JSON to Types</title>
+    <!--
+      CSP notes:
+      - unsafe-eval: required by Monaco Editor web workers
+      - unsafe-inline (style-src): required by Shiki inline token styles and Monaco
+      - blob: (script-src, worker-src): Monaco spawns workers via blob URLs
+      - frame-ancestors is not enforceable via meta tag; set via HTTP header on deploy
+    -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-eval' blob:;
+      style-src 'self' 'unsafe-inline';
+      worker-src blob:;
+      img-src 'self' data:;
+      font-src 'self';
+      connect-src 'self';
+      object-src 'none';
+      base-uri 'self';
+    " />
   </head>
   <body>
     <div id="root"></div>

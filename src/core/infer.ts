@@ -28,12 +28,17 @@ function inferArray(arr: JsonValue[]): JsonNode {
   return { kind: 'array', items: unified }
 }
 
+// Prototype-poisoning keys that must never propagate into generated code
+const BLOCKED_KEYS = new Set(['__proto__', 'constructor', 'prototype'])
+
 function inferObject(obj: { [k: string]: JsonValue }): JsonNode {
-  const fields: Field[] = Object.entries(obj).map(([key, val]) => ({
-    key,
-    node: val === null ? resolveNull() : inferNode(val),
-    optional: val === null,
-  }))
+  const fields: Field[] = Object.entries(obj)
+    .filter(([key]) => !BLOCKED_KEYS.has(key))
+    .map(([key, val]) => ({
+      key,
+      node: val === null ? resolveNull() : inferNode(val),
+      optional: val === null,
+    }))
   return { kind: 'object', fields }
 }
 
@@ -43,7 +48,9 @@ function resolveNull(): JsonNode {
 
 function mergeObjectFields(objects: { [k: string]: JsonValue }[]): JsonNode {
   const allKeys = new Set<string>()
-  for (const obj of objects) Object.keys(obj).forEach((k) => allKeys.add(k))
+  for (const obj of objects) Object.keys(obj).forEach((k) => {
+    if (!BLOCKED_KEYS.has(k)) allKeys.add(k)
+  })
 
   const fields: Field[] = []
   for (const key of allKeys) {

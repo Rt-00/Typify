@@ -85,4 +85,21 @@ describe('inferNode', () => {
       expect(user.node.kind).toBe('object')
     }
   })
+
+  it('strips __proto__ key to prevent prototype pollution', () => {
+    const node = inferNode({ __proto__: { admin: true }, id: 1 } as never)
+    if (node.kind === 'object') {
+      expect(node.fields.every((f) => f.key !== '__proto__')).toBe(true)
+    }
+  })
+
+  it('strips constructor and prototype keys', () => {
+    const node = inferNode({ constructor: 'x', prototype: 'y', name: 'Alice' } as never)
+    if (node.kind === 'object') {
+      const keys = node.fields.map((f) => f.key)
+      expect(keys).not.toContain('constructor')
+      expect(keys).not.toContain('prototype')
+      expect(keys).toContain('name')
+    }
+  })
 })

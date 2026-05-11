@@ -5,9 +5,14 @@ export type ParseResult =
   | { ok: true; node: JsonNode }
   | { ok: false; error: string }
 
+const MAX_INPUT_BYTES = 500_000 // 500 KB
+
 export function parse(input: string): ParseResult {
   const trimmed = input.trim()
   if (!trimmed) return { ok: false, error: 'Input is empty' }
+  if (trimmed.length > MAX_INPUT_BYTES) {
+    return { ok: false, error: `Input too large (max ${MAX_INPUT_BYTES / 1000} KB)` }
+  }
 
   let value: unknown
   try {

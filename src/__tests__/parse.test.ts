@@ -51,4 +51,11 @@ describe('parse', () => {
       if (result.node.kind === 'array') expect(result.node.items.kind).toBe('unknown')
     }
   })
+
+  it('rejects input exceeding the size limit', () => {
+    const huge = '{"a":"' + 'x'.repeat(500_001) + '"}'
+    const result = parse(huge)
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.error).toMatch(/too large/i)
+  })
 })
