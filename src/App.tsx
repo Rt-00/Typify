@@ -90,7 +90,7 @@ export default function App() {
           <span className="text-zinc-500 text-xs">JSON → Types</span>
         </div>
         <a
-          href="https://github.com"
+          href="https://github.com/Rt-00/Typify"
           target="_blank"
           rel="noopener noreferrer"
           className="text-zinc-500 hover:text-zinc-300 text-xs transition-colors"
