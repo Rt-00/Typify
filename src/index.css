@@ -11,6 +11,14 @@ html, body, #root {
   margin: 0;
 }
 
+/* Hide scrollbar on tab strip while keeping scroll functionality */
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 /* Output panel — Shiki line numbers via CSS counters */
 .shiki code {
   counter-reset: line;

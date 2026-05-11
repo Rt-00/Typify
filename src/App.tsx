@@ -80,14 +80,14 @@ export default function App() {
   return (
     <div className="h-screen flex flex-col bg-zinc-900 text-zinc-100 font-sans">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-3 border-b border-zinc-700 shrink-0">
+      <header className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-zinc-700 shrink-0">
         <div className="flex items-center gap-2">
           <span className="text-lg font-bold tracking-tight">
             <span className="text-blue-400">{'{'}</span>
             <span className="text-white"> Typify </span>
             <span className="text-blue-400">{'}'}</span>
           </span>
-          <span className="text-zinc-500 text-xs">JSON → Types</span>
+          <span className="hidden sm:inline text-zinc-500 text-xs">JSON → Types</span>
         </div>
         <a
           href="https://github.com/Rt-00/Typify"
@@ -99,10 +99,10 @@ export default function App() {
         </a>
       </header>
 
-      {/* Main split */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Left: JSON Input */}
-        <div className="w-1/2 flex flex-col border-r border-zinc-700 min-h-0">
+      {/* Main split — vertical on mobile, horizontal on md+ */}
+      <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-hidden">
+        {/* Top / Left: JSON Input */}
+        <div className="flex-1 min-h-0 min-w-0 flex flex-col border-b md:border-b-0 md:border-r border-zinc-700">
           <div className="flex-1 min-h-0">
             <JsonInput
               value={input}
@@ -113,14 +113,14 @@ export default function App() {
             />
           </div>
           {parseError && (
-            <div className="px-4 py-2 border-t border-zinc-700 shrink-0">
+            <div className="px-3 sm:px-4 py-2 border-t border-zinc-700 shrink-0">
               <ErrorBanner message={parseError} />
             </div>
           )}
         </div>
 
-        {/* Right: Output */}
-        <div className="w-1/2 flex flex-col min-h-0">
+        {/* Bottom / Right: Output */}
+        <div className="flex-1 min-h-0 min-w-0 flex flex-col">
           <TargetTabs active={target} onChange={setTarget} />
           <div className="flex-1 min-h-0 border-t border-zinc-600">
             <OutputPanel code={output} target={target} />

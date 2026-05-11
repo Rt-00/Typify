@@ -16,12 +16,12 @@ type Props = {
 
 export function TargetTabs({ active, onChange }: Props) {
   return (
-    <div className="flex gap-1 px-4 pt-3">
+    <div className="flex gap-1 px-3 sm:px-4 pt-3 overflow-x-auto scrollbar-none shrink-0">
       {TABS.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onChange(tab.id)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-t text-xs font-medium transition-colors ${
+          className={`shrink-0 flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-t text-xs font-medium transition-colors ${
             active === tab.id
               ? 'bg-zinc-800 text-white border-t border-x border-zinc-600'
               : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
@@ -34,7 +34,7 @@ export function TargetTabs({ active, onChange }: Props) {
           >
             {tab.icon}
           </span>
-          {tab.label}
+          <span className="hidden sm:inline">{tab.label}</span>
         </button>
       ))}
     </div>

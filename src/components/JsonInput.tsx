@@ -24,7 +24,7 @@ type Props = {
 export function JsonInput({ value, onChange, onFormat, onClear, hasError }: Props) {
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between px-4 py-2 border-b border-zinc-700">
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-zinc-700">
         <span className="text-xs font-medium text-zinc-400 uppercase tracking-wider">JSON Input</span>
         <div className="flex gap-2">
           <button
